@@ -54,3 +54,6 @@ auto-cli build --noemail // not send email
 --noemail: ignore send email.
 --noandroid: ignore android build
 --ios: ignore ios build
+
+## log
+### 1.0.4 fix fir email template and remove scan qr dowload text

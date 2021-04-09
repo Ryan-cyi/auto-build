@@ -18,6 +18,7 @@ module.exports = async (data, app_info, log) => {
     },
   }
   const email_template = await template({ data, app_info, log });
+  console.log('email_template', email_template)
   const payload = {
     from: email_user,
     to: email_to,

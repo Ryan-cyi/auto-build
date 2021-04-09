@@ -5,6 +5,7 @@ module.exports = () => {
   const configuration = config('all');
   const {
     publish_platform,
+    ios_plist_record,
     api_key,
     url,
     email_send_email,
@@ -17,6 +18,10 @@ module.exports = () => {
     install_password } = configuration;
   if (!constant.publish_platform.includes(publish_platform)) {
     console.log('publish platform is empty. please use "auto-cli i"');
+    process.exit(0);
+  }
+  if (!ios_plist_record) {
+    console.log('ios_plist_record is empty. please use "auto-cli i"');
     process.exit(0);
   }
   if (!api_key) {

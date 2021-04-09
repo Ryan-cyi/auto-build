@@ -24,6 +24,18 @@ const publish_platform_prompt = {
 const pgy = [
     {
         type: 'input',
+        message: 'please set ios plist',
+        name: 'ios_plist_record',
+        default: () => config('get', 'ios_plist_record'),
+        validate(v) {
+            if (!v) {
+                return "please entry set ios plist"
+            }
+            return true
+        }
+    },
+    {
+        type: 'input',
         message: 'please set pgy upload api path',
         name: 'url',
         default: () => config('get', 'url') || 'https://www.pgyer.com/apiv2/app/upload',
@@ -59,6 +71,7 @@ const install_password_prompt = {
     type: 'input',
     message: 'please enter install password',
     name: 'install_password',
+    default: () => config('get', 'install_password')
 }
 
 const fir = [
@@ -177,8 +190,9 @@ module.exports = async () => {
     config('set', 'build_platform', build_platform)
     const { publish_platform } = await inquirer.prompt(publish_platform_prompt)
     config('set', 'publish_platform', publish_platform)
-    const { url, api_key, install_type } = await inquirer.prompt(third_config[publish_platform])
+    const { ios_plist_record, url, api_key, install_type } = await inquirer.prompt(third_config[publish_platform])
     config('set', 'url', url)
+    config('set', 'ios_plist_record', ios_plist_record)
     config('set', 'api_key', api_key)
     config('set', 'install_type', install_type)
 

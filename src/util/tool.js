@@ -23,7 +23,7 @@ async function archive(filePath) {
 
 function execute(cmd) {
     return new Promise((resolve, reject) => {
-        child_process.exec(cmd, (error, stdout, stderr) => {
+        child_process.exec(cmd, (error, stdout) => {
             if (error) {
                 reject(error);
             } else {
@@ -37,8 +37,31 @@ async function get_file_path(file_path) {
     return await execute(`ls ${file_path}`);
 }
 
+
+async function execute_bash(params = []) {
+    return new Promise((resolve, reject) => {
+        const spawnEvent = child_process.spawn('sh', params);
+        spawnEvent.stdout.on('data', (data) => {
+            console.log(`${data}`);
+        });
+
+        spawnEvent.stderr.on('data', (data) => {
+            console.log(`${data}`);
+        });
+
+        spawnEvent.on('close', (code) => {
+            if (code === 0) {
+                resolve(`${params[0]} execute success!`);
+            } else {
+                reject(new Error(`${params[0]} execute failed!`));
+            }
+        });
+    });
+}
+
 module.exports = {
     execute,
     archive,
-    get_file_path
+    get_file_path,
+    execute_bash
 }
